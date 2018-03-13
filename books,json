@@ -1,0 +1,49 @@
+{
+ "books": [
+  {
+   "bookID": 0,
+   "bookName": "Harry Potter and the Philosopher's Stone",
+   "characters": [
+    {
+     "name": "Harry Potter"
+    },
+    {     "name": "Harry Potter"
+    },
+    {     "name": "Ronald Weasley"
+    },
+    {     "name": "Hermione Granger"
+    }
+   ]
+  },
+  {
+   "bookID": 1,
+   "bookName": "A Song of Ice and Fire",
+   "characters": [
+    {
+     "name": "Eddard Stark"
+    },
+    {
+     "name": "Jon Snow"
+    },
+    {
+     "name": "Daenerys Targaryen"
+    },
+    {
+     "name": "Tywin Lannister"
+    }
+   ]
+  },
+  {
+   "bookID": 2,
+   "bookName": "The Hunger Games",
+   "characters": [
+    {
+     "name": "Katniss Everdeen"
+    },
+    {
+     "name": "Peeta Mellark"
+    }
+   ]
+  }
+ ]
+}
