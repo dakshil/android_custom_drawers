@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
@@ -21,7 +22,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        String JSONFilePath;
+        String JSONFilePath = "";
         String JSONFileName = "books.json";
         fetchJSONFile jFile = new fetchJSONFile(this, JSONFileName);
         try {
@@ -45,6 +46,15 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        parseJSONFile parser = new parseJSONFile();
+        if(!JSONFileName.equals("")) {
+            try {
+                parseJSONFile.JsonData data = parser.bookDataParse(JSONFilePath, this, MainActivity.this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
