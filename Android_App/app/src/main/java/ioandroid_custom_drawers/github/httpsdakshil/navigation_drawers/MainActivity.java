@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String JSONFilePath;
-        String JSONFileName = "https://dakshil.github.io/android_custom_drawers/books.json";
+        String JSONFileName = "books.json";
         fetchJSONFile jFile = new fetchJSONFile(this, JSONFileName);
         try {
             JSONFilePath = jFile.execute().get();

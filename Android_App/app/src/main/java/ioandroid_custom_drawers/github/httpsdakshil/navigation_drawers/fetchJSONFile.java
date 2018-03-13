@@ -31,7 +31,7 @@ public class fetchJSONFile extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         try {
-            String fileURL = fileName;
+            String fileURL = "https://dakshil.github.io/android_custom_drawers/" + fileName;
             URL url = new URL(fileURL);
 
             InputStream in = new BufferedInputStream(url.openStream());
