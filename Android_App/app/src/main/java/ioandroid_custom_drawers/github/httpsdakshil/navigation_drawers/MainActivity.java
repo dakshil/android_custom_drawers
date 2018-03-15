@@ -15,15 +15,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ArrayList<String> listDataHeader = new ArrayList<>();
+    private HashMap<String, List<String>> listDataChild = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         String JSONFilePath = "";
         String JSONFileName = "books.json";
+
         fetchJSONFile jFile = new fetchJSONFile(this, JSONFileName);
         try {
             JSONFilePath = jFile.execute().get();
@@ -48,9 +55,18 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         parseJSONFile parser = new parseJSONFile();
+        parseJSONFile.JsonData data;
+        listDataHeader.add("Books");
+        listDataHeader.add("Characters");
+        ArrayList<String> bookList = new ArrayList<String>();
         if(!JSONFileName.equals("")) {
             try {
-                parseJSONFile.JsonData data = parser.bookDataParse(JSONFilePath, this, MainActivity.this);
+                data = parser.bookDataParse(JSONFilePath, this, MainActivity.this);
+                for(parseJSONFile.Books book:data.books) {
+                    bookList.add(book.bookName);
+                }
+                listDataChild.put("Books",bookList);
+                listDataChild.put("Characters",new ArrayList<String>());
             } catch (IOException e) {
                 e.printStackTrace();
             }
