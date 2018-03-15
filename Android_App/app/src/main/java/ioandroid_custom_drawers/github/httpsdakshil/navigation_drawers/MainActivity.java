@@ -1,5 +1,6 @@
 package ioandroid_custom_drawers.github.httpsdakshil.navigation_drawers;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -13,7 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ExpandableListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +60,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         parseJSONFile parser = new parseJSONFile();
-        parseJSONFile.JsonData data;
+        final parseJSONFile.JsonData data;
         listDataHeader.add("Books");
         listDataHeader.add("Characters");
         ArrayList<String> bookList = new ArrayList<String>();
@@ -72,6 +76,53 @@ public class MainActivity extends AppCompatActivity
                 final ExpandableListView expandableListView = findViewById(R.id.navigation_drawer);
                 final ExpandListAdapter listAdapter = new ExpandListAdapter(this, listDataHeader, listDataChild);
                 expandableListView.setAdapter(listAdapter);
+
+                expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+                    @SuppressLint({"SetTextI18n", "UseSparseArrays", "ClickableViewAccessibility"})
+                    @Override
+                    public boolean onChildClick(ExpandableListView parent, View v,
+                                                final int groupPosition, final int childPosition, long id) {
+
+                        Toast.makeText(
+                                getApplicationContext(),
+                                listDataHeader.get(groupPosition)
+                                        + " : "
+                                        + listDataChild.get(
+                                        listDataHeader.get(groupPosition)).get(
+                                        childPosition), Toast.LENGTH_SHORT)
+                                .show();
+                        if (groupPosition == 0) {
+                            TextView charTxt= findViewById(R.id.characterName);
+                            charTxt.setText("Select Character from book");
+                             parseJSONFile.Books bookSelected = data.books.get(childPosition);
+                            ArrayList<String> characters = new ArrayList<>(bookSelected.characters.size());
+
+                            for(parseJSONFile.Characters character : bookSelected.characters) {
+                                 characters.add(character.name);
+                             }
+                            String currentBook = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+
+                            if (currentBook != null) {
+                                getSupportActionBar().setTitle(currentBook);
+                            }
+                            listDataChild.put("Characters", characters);
+                            final ExpandListAdapter listAdapter = new ExpandListAdapter(MainActivity.this, listDataHeader, listDataChild);
+
+                            expandableListView.setAdapter(listAdapter);
+                            
+                        }
+                        if (groupPosition == 1) {
+                            String currentCharacter = listDataChild.get(listDataHeader.get(groupPosition)).get(childPosition);
+                            TextView charTxt= findViewById(R.id.characterName);
+                            charTxt.setText(currentCharacter);
+                        }
+                        
+                        expandableListView.collapseGroup(groupPosition);
+                        return false;
+                    }
+                });
+                
 
             } catch (IOException e) {
                 e.printStackTrace();
