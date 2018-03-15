@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -67,6 +68,9 @@ public class MainActivity extends AppCompatActivity
                 }
                 listDataChild.put("Books",bookList);
                 listDataChild.put("Characters",new ArrayList<String>());
+
+                final ExpandableListView expandableListView = findViewById(R.id.navigation_drawer);
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
