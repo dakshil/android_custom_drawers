@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity
                 listDataChild.put("Characters",new ArrayList<String>());
 
                 final ExpandableListView expandableListView = findViewById(R.id.navigation_drawer);
+                final ExpandListAdapter listAdapter = new ExpandListAdapter(this, listDataHeader, listDataChild);
+                expandableListView.setAdapter(listAdapter);
 
             } catch (IOException e) {
                 e.printStackTrace();
